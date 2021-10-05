@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0">
+  <bpmn:process id="primer-workflow-process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="say-hello" />
+    <bpmn:userTask id="say-hello" name="Realiza una bienvenida" camunda:candidateUsers="demo">
+      <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
+      <bpmn:outgoing>Flow_0n335sz</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:task id="Activity_0tmo6a6" name="¿Gusta de chocolate?">
+      <bpmn:incoming>Flow_0n335sz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0i82h2s</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0n335sz" sourceRef="say-hello" targetRef="Activity_0tmo6a6" />
+    <bpmn:exclusiveGateway id="Gateway_098oces" name="respuesta">
+      <bpmn:incoming>Flow_0i82h2s</bpmn:incoming>
+      <bpmn:outgoing>Flow_120jfro</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1s9ft1t</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0i82h2s" sourceRef="Activity_0tmo6a6" targetRef="Gateway_098oces" />
+    <bpmn:task id="Activity_1tpe29p" name="Entrega chocolate">
+      <bpmn:incoming>Flow_120jfro</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jjh47h</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_120jfro" name="Si" sourceRef="Gateway_098oces" targetRef="Activity_1tpe29p">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#(respuesta=='Si')</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_17ucb9w">
+      <bpmn:incoming>Flow_1s9ft1t</bpmn:incoming>
+      <bpmn:incoming>Flow_0jjh47h</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1s9ft1t" name="No" sourceRef="Gateway_098oces" targetRef="Event_17ucb9w">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#(respuesta=='No')</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0jjh47h" sourceRef="Activity_1tpe29p" targetRef="Event_17ucb9w" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="primer-workflow-process">
+      <bpmndi:BPMNEdge id="Flow_0n335sz_di" bpmnElement="Flow_0n335sz">
+        <di:waypoint x="340" y="247" />
+        <di:waypoint x="380" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fp17al_di" bpmnElement="SequenceFlow_1fp17al">
+        <di:waypoint x="188" y="247" />
+        <di:waypoint x="240" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i82h2s_di" bpmnElement="Flow_0i82h2s">
+        <di:waypoint x="480" y="247" />
+        <di:waypoint x="525" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_120jfro_di" bpmnElement="Flow_120jfro">
+        <di:waypoint x="550" y="222" />
+        <di:waypoint x="550" y="110" />
+        <di:waypoint x="590" y="110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="560" y="163" width="10" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s9ft1t_di" bpmnElement="Flow_1s9ft1t">
+        <di:waypoint x="575" y="247" />
+        <di:waypoint x="742" y="247" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="651" y="229" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jjh47h_di" bpmnElement="Flow_0jjh47h">
+        <di:waypoint x="690" y="110" />
+        <di:waypoint x="710" y="110" />
+        <di:waypoint x="710" y="247" />
+        <di:waypoint x="742" y="247" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="229" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_08mft2c_di" bpmnElement="say-hello">
+        <dc:Bounds x="240" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tmo6a6_di" bpmnElement="Activity_0tmo6a6">
+        <dc:Bounds x="380" y="207" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_098oces_di" bpmnElement="Gateway_098oces" isMarkerVisible="true">
+        <dc:Bounds x="525" y="222" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="526" y="279" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17ucb9w_di" bpmnElement="Event_17ucb9w">
+        <dc:Bounds x="742" y="229" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tpe29p_di" bpmnElement="Activity_1tpe29p">
+        <dc:Bounds x="590" y="70" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
